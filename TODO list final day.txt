@@ -1,0 +1,26 @@
+TODOILST:
+ 1. finish shaders control w temperature - DONE
+ 2. enemies spawn and AI
+ 6. Win and lose conditions. w restart button
+ 7. pause menu
+ 5. Licensing
+ 4. GitHub
+ 3. Tutorial
+ 9. tweak controls
+ 7. comment ALL the code
+ 10. particles
+ 8. implement secrets for the keks
+ 11. draw more terrain for the map
+
+ 
+ Tutorial Text:
+ 1 screen: Move w WASD
+ 2 Screen rotate the head w Up and Down
+ 3 screen rotate the neck w Left and Right
+ 4 screen shoot with SPACE BAR
+ 5 screen "moving and shooting cause the parts to heat"/"overheating may cause malfunctions and health"
+ 6 screen "But higher temperature increase your damage output"
+ 7 screen "Bullets that are on fire, deal double the damage"
+ 8 screen "Use this information to survive the <things> invasion!!"
+ 9 screen "shoot the start button to begin"
+
