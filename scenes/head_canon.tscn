@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://images/canon1.png" type="Texture" id=1]
+[ext_resource path="res://images/cannon_dead.png" type="Texture" id=2]
+[ext_resource path="res://images/cannon_heated.png" type="Texture" id=3]
+[ext_resource path="res://scenes/gui/circular_timer.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Shader" id=1]
+
+code = "shader_type canvas_item;
+
+uniform sampler2D heat_texture;
+uniform sampler2D cold_texture;
+uniform sampler2D dead_texture;
+uniform bool is_dead = false;
+uniform float val = 0.3;
+
+void fragment() {
+	vec4 t_heat = texture(heat_texture,UV);
+	vec4 t_cold= texture(cold_texture, UV);
+	vec4 t_dead = texture(dead_texture, UV);
+	
+	if(!is_dead){
+		COLOR = (1.0-val)*t_cold + val*t_heat;
+	}
+	else{
+		COLOR = t_dead;
+	}
+	
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+
+render_priority = 0
+shader = SubResource( 1 )
+shader_param/is_dead = false
+shader_param/val = 0.1
+shader_param/heat_texture = ExtResource( 3 )
+shader_param/cold_texture = ExtResource( 1 )
+shader_param/dead_texture = ExtResource( 2 )
+_sections_unfolded = [ "shader_param" ]
+
+[node name="head_canon" type="Node2D" index="0"]
+
+position = Vector2( 32, 32 )
+
+[node name="sprite" type="Sprite" parent="." index="0"]
+
+material = SubResource( 2 )
+texture = ExtResource( 1 )
+offset = Vector2( 32, 0 )
+_sections_unfolded = [ "Material" ]
+
+[node name="circular_timer" parent="." index="1" instance=ExtResource( 4 )]
+
+margin_left = 8.0
+margin_top = -24.0
+margin_right = 48.0
+margin_bottom = 16.0
+wait_time = 3.0
+is_counting = false
+
+

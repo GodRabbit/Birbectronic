@@ -1,0 +1,182 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://scripts/player_birb.gd" type="Script" id=1]
+[ext_resource path="res://images/birb_body1.png" type="Texture" id=2]
+[ext_resource path="res://images/birb_body_dead.png" type="Texture" id=3]
+[ext_resource path="res://images/birb_body_heated.png" type="Texture" id=4]
+[ext_resource path="res://images/birb_neck1.png" type="Texture" id=5]
+[ext_resource path="res://images/birb_neck_dead.png" type="Texture" id=6]
+[ext_resource path="res://images/birb_neck_heated.png" type="Texture" id=7]
+[ext_resource path="res://scenes/player_head.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/gui/hud.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/gui/circular_timer.tscn" type="PackedScene" id=10]
+
+[sub_resource type="Shader" id=2]
+
+code = "shader_type canvas_item;
+
+uniform sampler2D heat_texture;
+uniform sampler2D cold_texture;
+uniform sampler2D dead_texture;
+uniform bool is_dead = false;
+uniform float val = 0.3;
+
+void fragment() {
+	vec4 t_heat = texture(heat_texture,UV);
+	vec4 t_cold= texture(cold_texture, UV);
+	vec4 t_dead = texture(dead_texture, UV);
+	
+	if(!is_dead){
+		COLOR = (1.0-val)*t_cold + val*t_heat;
+	}
+	else{
+		COLOR = t_dead;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=1]
+
+render_priority = 0
+shader = SubResource( 2 )
+shader_param/is_dead = false
+shader_param/val = 0.2
+shader_param/heat_texture = ExtResource( 4 )
+shader_param/cold_texture = ExtResource( 2 )
+shader_param/dead_texture = ExtResource( 3 )
+_sections_unfolded = [ "shader_param" ]
+
+[sub_resource type="Shader" id=3]
+
+code = "shader_type canvas_item;
+
+uniform sampler2D heat_texture;
+uniform sampler2D cold_texture;
+uniform sampler2D dead_texture;
+uniform bool is_dead = false;
+uniform float val = 0.3;
+
+void fragment() {
+	vec4 t_heat = texture(heat_texture,UV);
+	vec4 t_cold= texture(cold_texture, UV);
+	vec4 t_dead = texture(dead_texture, UV);
+	
+	if(!is_dead){
+		COLOR = (1.0-val)*t_cold + val*t_heat;
+	}
+	else{
+		COLOR = t_dead;
+	}
+	
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+
+render_priority = 0
+shader = SubResource( 3 )
+shader_param/is_dead = false
+shader_param/val = 0.2
+shader_param/heat_texture = ExtResource( 7 )
+shader_param/cold_texture = ExtResource( 5 )
+shader_param/dead_texture = ExtResource( 6 )
+_sections_unfolded = [ "shader_param" ]
+
+[node name="player_birb" type="KinematicBody2D" index="0"]
+
+position = Vector2( 32, 32 )
+input_pickable = false
+collision_layer = 2
+collision_mask = 2
+collision/safe_margin = 0.001
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "Material", "Transform", "Visibility", "collision" ]
+body_temperature = 25.0
+head_temperature = 25.0
+cannon_temperature = 20.0
+max_health = 50.0
+current_side = "side_right"
+
+[node name="collision" type="CollisionPolygon2D" parent="." index="0"]
+
+visible = false
+position = Vector2( -192, -64 )
+build_mode = 0
+polygon = PoolVector2Array( 208, 16, 272, 16, 304, 16, 304, 88, 296, 112, 192, 112, 144, 112, 112, 112, 112, 16, 144, 16 )
+
+[node name="body" type="Sprite" parent="." index="1"]
+
+material = SubResource( 1 )
+position = Vector2( -16, 0 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Material" ]
+
+[node name="neck" type="Sprite" parent="body" index="0"]
+
+material = SubResource( 4 )
+position = Vector2( 95.28, -22.5052 )
+rotation = 0.684169
+texture = ExtResource( 5 )
+offset = Vector2( -1.79184, -20.0652 )
+_sections_unfolded = [ "Material", "Offset", "Transform" ]
+
+[node name="player_head" parent="body/neck" index="0" instance=ExtResource( 8 )]
+
+position = Vector2( -2.56935, -45.821 )
+rotation = -0.814918
+
+[node name="pos_end" type="Node2D" parent="body/neck/player_head" index="3"]
+
+position = Vector2( 146.649, -59.3491 )
+rotation = 0.130749
+scale = Vector2( 0.2, 0.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="pos_start" type="Node2D" parent="body/neck/player_head" index="4"]
+
+position = Vector2( 91.8123, -52.7527 )
+rotation = 0.130749
+scale = Vector2( 0.2, 0.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="camera" type="Camera2D" parent="." index="2"]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 2, 2 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+
+[node name="hud" parent="." index="3" instance=ExtResource( 9 )]
+
+[node name="circular_timer" parent="." index="4" instance=ExtResource( 10 )]
+
+margin_left = -8.0
+margin_top = -32.0
+margin_right = 32.0
+margin_bottom = 8.0
+is_counting = false
+
+[node name="invinc_timer" type="Timer" parent="." index="5"]
+
+process_mode = 0
+wait_time = 1.0
+one_shot = true
+autostart = false
+
+

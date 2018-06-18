@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/enemies/enemy_thing_green.gd" type="Script" id=1]
+[ext_resource path="res://images/things/thing_green1.png" type="Texture" id=2]
+[ext_resource path="res://images/gui/circular_bar2.png" type="Texture" id=3]
+
+[node name="enemy_thing_red1" type="Area2D" index="0"]
+
+position = Vector2( 32, 32 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 7
+collision_mask = 7
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 1 )
+_sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Pickable" ]
+max_hp = 40.0
+
+[node name="sprite" type="Sprite" parent="." index="0"]
+
+position = Vector2( 18, 6 )
+texture = ExtResource( 2 )
+
+[node name="coll" type="CollisionPolygon2D" parent="." index="1"]
+
+visible = false
+build_mode = 0
+polygon = PoolVector2Array( -34, -38, -8, -14, 0, -24, 44, -24, 72, -14, 74, 2, 52, 28, 50, -2, 6, 28, -12, 14, -18, 20, -6, 52, -26, 38, -38, 22 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="progress" type="TextureProgress" parent="." index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -4.0
+margin_top = -22.0
+margin_right = 36.0
+margin_bottom = 18.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 100.0
+exp_edit = false
+rounded = false
+texture_under = null
+texture_over = null
+texture_progress = ExtResource( 3 )
+fill_mode = 4
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = false
+_sections_unfolded = [ "Textures" ]
+
+[node name="move_timer" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 2.0
+one_shot = false
+autostart = false
+
+
