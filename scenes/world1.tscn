@@ -62,7 +62,7 @@ scale = Vector2( 1, 1.08333 )
 
 [node name="enemy_thing_red1" parent="enemies" index="0" instance=ExtResource( 6 )]
 
-position = Vector2( 432, -1008 )
+position = Vector2( -512, -864 )
 is_disabled = true
 
 [node name="enemy_thing_red2" parent="enemies" index="1" instance=ExtResource( 7 )]
@@ -90,6 +90,7 @@ is_disabled = true
 [node name="end_game" type="CanvasLayer" parent="." index="6"]
 
 pause_mode = 2
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -163,5 +164,29 @@ group = null
 text = "EXIT"
 flat = false
 align = 1
+
+[node name="death_walls" type="Area2D" parent="." index="7" groups=[
+"walls",
+]]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="coll1" type="CollisionPolygon2D" parent="death_walls" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 1760, -2848, 1760, 704, -5280, 704, -5280, 1008, 2224, 992, 2224, -2848 )
+
+[node name="coll2" type="CollisionPolygon2D" parent="death_walls" index="1"]
+
+position = Vector2( -3530.55, -2180.08 )
+rotation = 3.13951
+build_mode = 0
+polygon = PoolVector2Array( 1756.07, -3184.44, 1748.06, 671.556, -5723.92, 656.031, -5724.75, 1056.03, 2147.33, 1024.39, 2252.07, -3183.41 )
 
 
