@@ -52,6 +52,8 @@ func _physics_process(delta):
 			x.on_hurt(-get_damage())
 		if(x.is_in_group("player_head")):
 			x.get_parent().get_parent().get_parent().on_hurt(-get_damage()) #nasty but I dont have time for pretty code :((
+		if(x.is_in_group("walls")):
+			add_hp(-1)
 	
 	add_hp(hp_regen)
 
@@ -104,7 +106,7 @@ func get_random_point():
 	return Vector2(x, y)
 
 func spawn_enemy():
-	if(is_disabled):
+	if(is_disabled || enemies_collection.get_children().size() > 50):
 		return
 	randomize()
 	var num = randi() % 10

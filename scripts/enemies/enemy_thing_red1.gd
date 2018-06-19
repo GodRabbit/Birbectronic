@@ -24,7 +24,7 @@ onready var move_timer = get_node("move_timer")
 export var is_disabled = false
 export var max_hp = 15.0
 var current_hp = max_hp
-var damage = 5
+var damage = 3
 var speed = 25
 var velocity = Vector2(1,1)
 
@@ -47,6 +47,8 @@ func _physics_process(delta):
 			x.on_hurt(-get_damage())
 		if(x.is_in_group("player_head")):
 			x.get_parent().get_parent().get_parent().on_hurt(-get_damage()) #nasty but I dont have time for pretty code :((
+		if(x.is_in_group("walls")):
+			add_hp(-1)
 
 func get_damage():
 	return damage
